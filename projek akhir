@@ -1,0 +1,49 @@
+import sys
+from PyQt6.QtWidgets import (
+    QApplication, QMainWindow, QLabel, QLineEdit, QPushButton
+)
+from PyQt6.QtCore import Qt
+
+
+class MainWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+
+        # Set Judul dan Ukuran Jendela
+        self.setWindowTitle("Aplikasi Sapa Pengguna")
+        self.setGeometry(100, 100, 350, 200)
+
+        # Label Judul
+        self.label_judul = QLabel("Masukkan Nama Anda:", self)
+        self.label_judul.move(20, 20)
+
+        # Input Nama (QLineEdit)
+        self.input_nama = QLineEdit(self)
+        self.input_nama.setGeometry(20, 50, 200, 30)
+
+        # Tombol Sapa (QPushButton)
+        self.btn_sapa = QPushButton("Sapa", self)
+        self.btn_sapa.setGeometry(230, 50, 80, 30)
+
+        # Label Output Sapaan
+        self.label_sapaan = QLabel("", self)
+        self.label_sapaan.setGeometry(20, 100, 300, 30)
+        self.label_sapaan.setAlignment(Qt.AlignmentFlag.AlignLeft)
+
+        # Signal dan Slot
+        self.btn_sapa.clicked.connect(self.sapa_pengguna)
+
+    def sapa_pengguna(self):
+        nama = self.input_nama.text()
+        if nama:
+            self.label_sapaan.setText(f"Halo, {nama}! Selamat datang.")
+        else:
+            self.label_sapaan.setText("Silakan masukkan nama terlebih dahulu.")
+
+
+# Main Program
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    window = MainWindow()
+    window.show()
+    sys.exit(app.exec())
